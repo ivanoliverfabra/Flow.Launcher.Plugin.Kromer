@@ -1,0 +1,18 @@
+{
+  "name": "flow-launcher-plugin-kromer",
+  "type": "module",
+  "dependencies": {
+    "@noble/hashes": "^2.0.1",
+    "flow-launcher-helper": "^2.2.0",
+    "jskromer": "^0.0.7",
+    "keytar": "^7.9.0",
+    "open": "^8.4.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "devDependencies": {
+    "@types/node": "^24.5.2"
+  }
+}

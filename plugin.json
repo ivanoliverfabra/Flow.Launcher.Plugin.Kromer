@@ -1,0 +1,15 @@
+{
+  "$schema": "https://www.flowlauncher.com/schemas/plugin.schema.json",
+  "ID": "01303d25f4404dbd9ec436f74a3a206f",
+  "ActionKeywords": [
+    "kr"
+  ],
+  "Name": "Kromer",
+  "Description": "Control your kromer funds from Flow Launcher",
+  "Author": "Iván Oliver Fabra",
+  "Version": "1.0.0",
+  "Language": "javascript",
+  "Website": "https://github.com/ivanoliverfabra/Flow.Launcher.Plugin.Kromer",
+  "ExecuteFileName": "./build/index.js",
+  "IcoPath": "app.png"
+}
