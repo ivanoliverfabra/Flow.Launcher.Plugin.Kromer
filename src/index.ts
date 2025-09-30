@@ -1,16 +1,17 @@
 import { Flow } from "flow-plugin";
+import { Command, runCommand } from "./lib/command.js";
 
-// Import all commands
 import helpCommand from "./commands/help.js";
 import sendTransactionCommand from "./commands/send.js";
+import shopCommand from "./commands/shop.js";
 import TransactionCommand from "./commands/transaction.js";
 import walletCommand from "./commands/wallet.js";
-import { Command, runCommand } from "./lib/command.js";
 
 const commands: Command[] = [
   walletCommand,
   sendTransactionCommand,
   TransactionCommand,
+  shopCommand,
 ] as const;
 const helpCommandInstance = helpCommand(commands);
 

@@ -10,14 +10,6 @@ import {
   tryCatchAsync,
 } from "../lib/utils.js";
 
-interface WalletInfo {
-  address: string;
-  balance: string;
-  found: boolean;
-  raw: Wallet;
-  lastUpdated?: Date;
-}
-
 function formatBalance(balance: string): string {
   const num = parseFloat(balance);
   if (num === 0) return "0.00 KRO";

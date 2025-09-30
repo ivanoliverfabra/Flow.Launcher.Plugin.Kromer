@@ -4,13 +4,15 @@
   "dependencies": {
     "@noble/hashes": "^2.0.1",
     "flow-plugin": "^1.4.0",
+    "fuse.js": "^7.1.0",
     "jskromer": "^0.0.8",
     "keytar": "^7.9.0",
     "open": "^8.4.0"
   },
   "scripts": {
     "build": "tsc",
-    "dev": "tsc --watch --watchFile usefsevents"
+    "dev": "tsc --watch --watchFile usefsevents",
+    "clean": "rm -rf ./build"
   },
   "devDependencies": {
     "@types/node": "^24.5.2"
