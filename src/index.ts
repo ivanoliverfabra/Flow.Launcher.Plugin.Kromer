@@ -1,37 +1,29 @@
-// src/index.ts
-import { CommandManager } from "./lib/command-manager";
+import { Flow } from "flow-plugin";
 
-import { DeleteKeyCommand } from "./commands/delete";
-import { ImportKeyCommand } from "./commands/import";
-import { SendCommand } from "./commands/send";
+// Import all commands
+import helpCommand from "./commands/help.js";
+import sendTransactionCommand from "./commands/send.js";
+import TransactionCommand from "./commands/transaction.js";
+import walletCommand from "./commands/wallet.js";
+import { Command, runCommand } from "./lib/command.js";
 
-import { AliasCommand } from "./commands/alias";
-import { ListAliasesCommand } from "./commands/aliases";
-import { UnaliasCommand } from "./commands/unalias";
+const commands: Command[] = [
+  walletCommand,
+  sendTransactionCommand,
+  TransactionCommand,
+] as const;
+const helpCommandInstance = helpCommand(commands);
 
-import { BalanceCommand } from "./commands/balance";
-import { NamesCommand } from "./commands/names";
+const flow = new Flow({ keepOrder: true, icon: "app.png" });
 
-import { LatestCommand } from "./commands/latest";
-import { TxCommand } from "./commands/tx";
-import { TxViewCommand } from "./commands/txview";
+flow.on("query", async ({ prompt }, response) => {
+  const parts = prompt.trim().split(" ");
+  const [cmd] = parts;
 
-import { HelpCommand } from "./commands/help";
-import { DEFAULT_ICON } from "./lib/const";
 
-const manager = new CommandManager(DEFAULT_ICON);
+  if (helpCommandInstance.matches(cmd) || cmd === "") {
+    return helpCommandInstance.run([], response, cmd);
+  }
 
-manager.register(new ImportKeyCommand());
-manager.register(new DeleteKeyCommand());
-manager.register(new SendCommand());
-manager.register(new TxCommand());
-manager.register(new TxViewCommand());
-manager.register(new LatestCommand());
-manager.register(new AliasCommand());
-manager.register(new UnaliasCommand());
-manager.register(new ListAliasesCommand());
-manager.register(new BalanceCommand());
-manager.register(new NamesCommand());
-manager.register(new HelpCommand(() => manager.commands));
-
-manager.init();
+  return runCommand(commands, prompt.trim(), response);
+});

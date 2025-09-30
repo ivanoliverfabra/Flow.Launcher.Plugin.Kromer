@@ -1,21 +1,18 @@
-// src/commands/help.ts
-import { JSONRPCResponse } from "flow-launcher-helper";
-import { Command } from "../lib/command";
+import { FlowActions } from "flow-plugin";
+import { cmd, Command } from "../lib/command.js";
+import { formatCommand } from "../lib/utils.js";
 
-export class HelpCommand extends Command {
-  name = "help";
-  aliases = ["?"];
-
-  constructor(private available: () => Command[]) {
-    super();
-  }
-
-  async run(): Promise<JSONRPCResponse<string & {}>[]> {
-    return this.available().map((c) => ({
-      title: c.name,
-      subtitle: c.aliases.length
-        ? `Aliases: ${c.aliases.join(", ")}`
-        : "No aliases",
-    }));
-  }
-}
+export default (commands: Command[]) => cmd({
+  name: "help",
+  aliases: ["h", "?"],
+  description: "Show this help message",
+}, async (_, res) => {
+  res.add({ title: "Kromer Plugin Help", subtitle: "Available Commands:" });
+  commands.forEach((cmd) => {
+    res.add({
+      title: `${cmd.name} - ${cmd.description}`,
+      subtitle: cmd.usage || "",
+      jsonRPCAction: cmd.name !== "help" ? FlowActions.changeQuery(formatCommand(cmd.name)) : undefined,
+    });
+  });
+})
